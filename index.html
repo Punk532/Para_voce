@@ -1,63 +1,142 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Para alguém especial</title>
-  <style>
-    body {
-      background-color: #0a0a0a;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Para Você</title>
+<style>
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #ff4081, #ff80ab);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 20px;
+  }
+
+  button {
+    background-color: #ff1744;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.8rem;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 23, 68, 0.6);
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #d50000;
+  }
+
+  .messages {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .message {
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    animation: floatUp 5s linear infinite;
+    opacity: 0.8;
+    margin: 5px 0;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(100px);
+      opacity: 0;
     }
-    .container {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    50% {
+      opacity: 0.8;
     }
-    .mensagem {
-      margin-top: 30px;
-      font-size: 20px;
-      white-space: pre-wrap;
+    100% {
+      transform: translateY(-100px);
+      opacity: 0;
     }
-    .assinatura {
-      margin-top: 50px;
-      font-size: 18px;
-      color: #888;
-    }
-  </style>
+  }
+
+  footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  }
+</style>
 </head>
 <body>
-
   <div class="container">
-    <h1>💖 Eu te amo muito 💖</h1>
-    <div class="mensagem">
-      Eu te amo muito, você é importante pra mim 💖  
-      Eu te amo muito, você é importante pra mim 💖  
-      Eu te amo muito, você é importante pra mim 💖  
-      Eu te amo muito, você é importante pra mim 💖  
-      Eu te amo muito, você é importante pra mim 💖  
-      Eu te amo muito, você é importante pra mim 💖  
-      Eu te amo muito, você é importante pra mim 💖  
-      Eu te amo muito, você é importante pra mim 💖  
-    </div>
-    <div class="assinatura">by: Punk</div>
+    <button id="playBtn">Clique aqui para ouvir uma surpresa 🎵</button>
+    <div class="messages" id="messages"></div>
   </div>
+  <footer>by: Punk</footer>
 
-  <audio id="myAudio" src="tropa.mp3" autoplay></audio>
+  <audio id="audio" src="tropa.mp3"></audio>
 
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const audio = document.getElementById("myAudio");
-      audio.play().catch(() => {
-        document.body.addEventListener('click', () => audio.play(), { once: true });
+    const playBtn = document.getElementById('playBtn');
+    const audio = document.getElementById('audio');
+    const messagesContainer = document.getElementById('messages');
+
+    // Muitas repetições da mensagem "Eu te amo muito," e uma frase importante no meio
+    const mensagens = [
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Você é importante pra mim",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Você é importante pra mim",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,",
+      "Eu te amo muito,"
+    ];
+
+    function mostrarMensagens() {
+      messagesContainer.innerHTML = '';
+      mensagens.forEach((texto, i) => {
+        const span = document.createElement('div');
+        span.classList.add('message');
+        span.style.animationDelay = `${i * 0.7}s`;
+        span.textContent = texto;
+        messagesContainer.appendChild(span);
       });
+    }
+
+    playBtn.addEventListener('click', () => {
+      audio.play();
+      mostrarMensagens();
+      playBtn.disabled = true;
+      playBtn.style.opacity = '0.6';
+      playBtn.textContent = 'Tocando... 🎶';
     });
   </script>
-
 </body>
 </html>
